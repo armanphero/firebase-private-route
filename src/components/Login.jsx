@@ -1,10 +1,10 @@
 import React, { useContext, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from './AuthComponent';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const Login = () => {
-    const { signInUser, setUser} = useContext(AuthContext);
+    const { signInUser, setUser, user } = useContext(AuthContext);
 
     const formRef = useRef();
     const handleSignIn = (event) => {

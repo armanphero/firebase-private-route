@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from './AuthComponent';
 
 const Header = () => {
-    const {user} = useContext(AuthContext);
-    // const user = handleSignInUserState();
+    const { user, signOutUser } = useContext(AuthContext);
+    const handleSignOut = () => {
+        signOutUser()
+            .then(() => {
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     console.log(user);
     return (
         <nav className='container mx-auto'>
@@ -33,17 +41,31 @@ const Header = () => {
                         <li>
                             <Link to='/' className='font-semibold'>Home</Link>
                         </li>
+                        {
+                            !user &&
+                            <>
+                                <li>
+                                    <Link to='/login' className='font-semibold'>Login</Link>
+                                </li>
+                                <li>
+                                    <Link to='/register' className='font-semibold'>Register</Link>
+                                </li>
+                            </>
+                        }
                         <li>
-                            <Link to='/login' className='font-semibold'>Login</Link>
+                            <Link to='/orders' className='font-semibold'>Orders</Link>
                         </li>
-                        <li>
-                            <Link to='/register' className='font-semibold'>Register</Link>
-                        </li>
+                        {
+                            user &&
+                            <li>
+                                <button className='font-semibold' onClick={handleSignOut}>Logout</button>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div className="navbar-end">
                     {
-                        user && 
+                        user &&
                         <div>
                             <p>{user.email}</p>
                         </div>
